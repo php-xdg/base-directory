@@ -20,4 +20,9 @@ trait UnixPathTrait
 
         throw new MissingHomeDirectoryPath();
     }
+
+    protected function isAbsolutePath(string $path): bool
+    {
+        return str_starts_with($path, '/');
+    }
 }

@@ -73,6 +73,11 @@ final class WindowsPlatform extends AbstractPlatform
         return $this->getLocalAppDataPath();
     }
 
+    protected function isAbsolutePath(string $path): bool
+    {
+        return Path::isAbsolute($path);
+    }
+
     private function getAppDataPath(): string
     {
         return $this->env->get(self::APP_DATA) ?? $this->getHomePath(self::APP_DATA_DEFAULT);
