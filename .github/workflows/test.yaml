@@ -1,0 +1,61 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: PHP ${{ matrix.php-version }} + ${{ matrix.dependencies }} / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    continue-on-error: false
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+        php-version:
+          - '8.1'
+        dependencies:
+          - lowest
+          - highest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Install PHP with extensions
+        uses: shivammathur/setup-php@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: pcov
+          tools: composer:v2, phive
+
+      - name: Install Composer dependencies (${{ matrix.dependencies }})
+        uses: ramsey/composer-install@v1
+        with:
+          dependency-versions: ${{ matrix.dependencies }}
+          composer-options: --prefer-dist --prefer-stable
+
+      - name: Install PHAR tools
+        run: phive install --trust-gpg-keys 4AA394086372C20A
+
+      - name: Run tests with coverage
+        run: tools/phpunit.phar --coverage-php build/coverage/${{ matrix.os }}-${{ matrix.php-version}}.cov
+
+      - name: Combine code coverage data
+        run: tools/phpcov merge --clover build/clover.xml build/coverage
+
+      - name: Send coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: build/clover.xml
