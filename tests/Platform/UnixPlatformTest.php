@@ -6,6 +6,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use Xdg\BaseDirectory\Environment\ArrayProvider;
 use Xdg\BaseDirectory\Exception\MissingHomeDirectoryPath;
+use Xdg\BaseDirectory\Exception\UnsupportedEnvironment;
 use Xdg\BaseDirectory\Platform\UnixPlatform;
 
 final class UnixPlatformTest extends TestCase
@@ -146,6 +147,37 @@ final class UnixPlatformTest extends TestCase
             '',
             MissingHomeDirectoryPath::class,
         ];
+    }
+
+    /**
+     * @dataProvider getRuntimeDirectoryProvider
+     */
+    public function testGetRuntimeDirectory(array $env, string $expected, ?string $exception = null): void
+    {
+        if ($exception) {
+            $this->expectException($exception);
+        }
+        Assert::assertSame($expected, self::createPlatform($env)->getRuntimeDirectory());
+    }
+
+    public function getRuntimeDirectoryProvider(): iterable
+    {
+        yield 'env is set' => [
+            ['XDG_RUNTIME_DIR' => '/foo/bar'],
+            '/foo/bar',
+        ];
+        if (function_exists('posix_getuid')) {
+            yield 'defaults' => [
+                [],
+                '/run/user/' . posix_getuid(),
+            ];
+        } else {
+            yield 'missing posix extension' => [
+                [],
+                '',
+                UnsupportedEnvironment::class,
+            ];
+        }
     }
 
     /**
