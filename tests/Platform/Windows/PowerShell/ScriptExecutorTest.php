@@ -29,7 +29,7 @@ final class ScriptExecutorTest extends TestCase
     {
         yield 'echo "success"' => [
             [ResourceHelper::getPath('powershell/echo.ps1'), 'success'],
-            'success',
+            "success\n",
         ];
         yield 'exit > 0' => [
             [ResourceHelper::getPath('powershell/exit-err.ps1')],

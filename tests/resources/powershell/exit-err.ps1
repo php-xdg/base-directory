@@ -1,2 +1,2 @@
-Write-Error "hide me"
+Write-Host "exit(1)"
 exit 1
