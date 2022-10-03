@@ -18,24 +18,18 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          - macos-latest
           - windows-latest
+#          - macos-latest
         php-version:
           - '8.1'
         dependencies:
-#          - lowest
           - highest
+#          - lowest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           submodules: true
-
-      - uses: actions/cache@v3
-        id: coverage-cache
-        with:
-          path: build/coverage/*.cov
-          key: ${{ github.workflow }}-${{ github.ref }}-coverage
 
       - name: Install PHP with extensions
         uses: shivammathur/setup-php@v2
@@ -53,32 +47,7 @@ jobs:
           composer-options: --prefer-dist --prefer-stable
 
       - name: Run tests with coverage
-        run: phpunit --coverage-php build/coverage/${{ matrix.os }}-${{ matrix.php-version}}-${{ matrix.dependencies }}.cov
-
-  coverage:
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-      - name: Install PHP with extensions
-        uses: shivammathur/setup-php@v2
-        env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-         php-version: 8.1
-         coverage: none
-         tools: phive
-
-      - uses: actions/cache@v3
-        id: coverage-cache
-        with:
-          path: build/coverage/*.cov
-          key: ${{ github.workflow }}-${{ github.ref }}-coverage
-
-      - name: Install PHAR tools
-        run: phive install --trust-gpg-keys 4AA394086372C20A
-
-      - name: Combine code coverage data
-        run: tools/phpcov merge --clover build/clover.xml build/coverage
+        run: phpunit --coverage-clover=build/clover.xml
 
       - name: Send coverage to Codecov
         uses: codecov/codecov-action@v3
