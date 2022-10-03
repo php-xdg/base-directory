@@ -23,7 +23,7 @@ jobs:
         php-version:
           - '8.1'
         dependencies:
-          - lowest
+#          - lowest
           - highest
     steps:
       - name: Checkout

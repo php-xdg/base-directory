@@ -8,7 +8,7 @@ final class ResourceHelper
 {
     public static function getPath(string $path): string
     {
-        $absolutePath = Path::join(__DIR__, $path);
+        $absolutePath = Path::join(__DIR__, 'resources', $path);
         if (!file_exists($absolutePath)) {
             throw new \LogicException(sprintf(
                 'Resource not found: %s',
