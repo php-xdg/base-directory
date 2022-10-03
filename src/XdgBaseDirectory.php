@@ -8,6 +8,7 @@ use Xdg\BaseDirectory\Environment\SuperGlobalsProvider;
 use Xdg\BaseDirectory\Platform\MacOsPlatform;
 use Xdg\BaseDirectory\Platform\PlatformInterface;
 use Xdg\BaseDirectory\Platform\UnixPlatform;
+use Xdg\BaseDirectory\Platform\Windows\KnownFoldersProviderFactory;
 use Xdg\BaseDirectory\Platform\WindowsPlatform;
 
 /**
@@ -27,7 +28,7 @@ final class XdgBaseDirectory
         );
 
         return match (\PHP_OS_FAMILY) {
-            'Windows' => new WindowsPlatform($env),
+            'Windows' => new WindowsPlatform($env, KnownFoldersProviderFactory::fromEnvironment()),
             'Darwin' => new MacOsPlatform($env),
             default => new UnixPlatform($env),
         };

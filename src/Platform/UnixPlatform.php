@@ -2,6 +2,8 @@
 
 namespace Xdg\BaseDirectory\Platform;
 
+use Xdg\BaseDirectory\Exception\UnsupportedEnvironment;
+
 final class UnixPlatform extends AbstractPlatform
 {
     use UnixPathTrait;
@@ -38,22 +40,15 @@ final class UnixPlatform extends AbstractPlatform
 
     protected function getDefaultRuntimeDirectory(): string
     {
-        if (null !== $uid = $this->getUid()) {
-            return "/run/user/{$uid}";
-        }
-
-        return sys_get_temp_dir();
+        return sprintf('/run/user/%d', $this->getUid());
     }
 
-    private function getUid(): ?int
+    private function getUid(): int
     {
         if (function_exists('posix_getuid')) {
             return posix_getuid();
         }
-        if (is_readable('/proc/self/status')) {
-            return stat('/proc/self/status')['uid'];
-        }
 
-        return null;
+        throw new UnsupportedEnvironment('Missing PHP extension: posix');
     }
 }

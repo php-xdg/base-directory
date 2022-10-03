@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 use Xdg\BaseDirectory\Environment\ArrayProvider;
 use Xdg\BaseDirectory\Exception\MissingHomeDirectoryPath;
 use Xdg\BaseDirectory\Platform\MacOsPlatform;
+use Xdg\BaseDirectory\Platform\Windows\KnownFoldersArrayProvider;
 use Xdg\BaseDirectory\Platform\WindowsPlatform;
 
 final class WindowsPlatformTest extends TestCase
@@ -19,6 +20,7 @@ final class WindowsPlatformTest extends TestCase
                 'HOMEPATH' => '\\users\\test',
                 ...$env,
             ]),
+            new KnownFoldersArrayProvider([]),
         );
     }
 

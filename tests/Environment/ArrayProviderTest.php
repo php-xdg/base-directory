@@ -5,6 +5,7 @@ namespace Xdg\BaseDirectory\Tests\Environment;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use Xdg\BaseDirectory\Environment\ArrayProvider;
+use Xdg\BaseDirectory\Environment\Exception\UnexpectedValueException;
 
 final class ArrayProviderTest extends TestCase
 {
@@ -33,6 +34,28 @@ final class ArrayProviderTest extends TestCase
             ['foo' => ''],
             'foo',
             null,
+        ];
+    }
+
+    /**
+     * @dataProvider getFailsForNonScalarsProvider
+     */
+    public function testGetFailsForNonScalars(array $env, string $key): void
+    {
+        $this->expectException(UnexpectedValueException::class);
+        $provider = new ArrayProvider($env);
+        $provider->get($key);
+    }
+
+    public function getFailsForNonScalarsProvider(): iterable
+    {
+        yield 'array' => [
+            ['foo' => []],
+            'foo',
+        ];
+        yield 'object' => [
+            ['foo' => new \stdClass()],
+            'foo',
         ];
     }
 }

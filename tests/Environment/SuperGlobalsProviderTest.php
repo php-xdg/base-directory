@@ -4,6 +4,8 @@ namespace Xdg\BaseDirectory\Tests\Environment;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use Xdg\BaseDirectory\Environment\ArrayProvider;
+use Xdg\BaseDirectory\Environment\Exception\UnexpectedValueException;
 use Xdg\BaseDirectory\Environment\SuperGlobalsProvider;
 
 final class SuperGlobalsProviderTest extends TestCase
@@ -38,6 +40,30 @@ final class SuperGlobalsProviderTest extends TestCase
         ];
         yield 'coerces false to null' => [
             [], ['foo' => false], 'foo', null,
+        ];
+    }
+
+    /**
+     * @dataProvider getFailsForNonScalarsProvider
+     * @backupGlobals enabled
+     */
+    public function testGetFailsForNonScalars(array $server, array $env, string $key): void
+    {
+        $this->expectException(UnexpectedValueException::class);
+        $this->populateEnv($server, $env);
+        $provider = new SuperGlobalsProvider();
+        $provider->get($key);
+    }
+
+    public function getFailsForNonScalarsProvider(): iterable
+    {
+        yield 'array' => [
+            ['foo' => []], [],
+            'foo',
+        ];
+        yield 'object' => [
+            [], ['foo' => new \stdClass()],
+            'foo',
         ];
     }
 
