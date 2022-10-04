@@ -11,9 +11,6 @@ abstract class AbstractPlatform implements PlatformInterface
     ) {
     }
 
-    /**
-     * Returns the base directory relative to which user-specific data files should be stored.
-     */
     final public function getDataHome(): string
     {
         return $this->getPathFromEnv('XDG_DATA_HOME') ?? $this->getDefaultDataHome();
@@ -21,9 +18,6 @@ abstract class AbstractPlatform implements PlatformInterface
 
     abstract protected function getDefaultDataHome(): string;
 
-    /**
-     * Returns the base directory relative to which user-specific configuration files should be stored.
-     */
     final public function getConfigHome(): string
     {
         return $this->getPathFromEnv('XDG_CONFIG_HOME') ?? $this->getDefaultConfigHome();
@@ -31,9 +25,6 @@ abstract class AbstractPlatform implements PlatformInterface
 
     abstract protected function getDefaultConfigHome(): string;
 
-    /**
-     * Returns the base directory relative to which user-specific non-essential (cached) data should be written.
-     */
     final public function getCacheHome(): string
     {
         return $this->getPathFromEnv('XDG_CACHE_HOME') ?? $this->getDefaultCacheHome();
@@ -41,9 +32,6 @@ abstract class AbstractPlatform implements PlatformInterface
 
     abstract protected function getDefaultCacheHome(): string;
 
-    /**
-     * Returns the base directory relative to which user-specific state files should be stored.
-     */
     final public function getStateHome(): string
     {
         return $this->getPathFromEnv('XDG_STATE_HOME') ?? $this->getDefaultStateHome();
@@ -58,12 +46,6 @@ abstract class AbstractPlatform implements PlatformInterface
 
     abstract protected function getDefaultRuntimeDirectory(): string;
 
-    /**
-     * Returns the preference-ordered set of base directories to search for data files
-     * in addition to the base directory return by {@see self::getDataHome()}.
-     *
-     * @return string[]
-     */
     final public function getDataDirectories(): array
     {
         if ($paths = $this->getPathListFromEnv('XDG_DATA_DIRS')) {
@@ -75,12 +57,6 @@ abstract class AbstractPlatform implements PlatformInterface
 
     abstract protected function getDefaultDataDirectories(): array;
 
-    /**
-     * Returns the preference-ordered set of base directories to search for config files
-     * in addition to the base directory return by {@see self::getConfigHome()}.
-     *
-     * @return string[]
-     */
     final public function getConfigDirectories(): array
     {
         if ($paths = $this->getPathListFromEnv('XDG_CONFIG_DIRS')) {
