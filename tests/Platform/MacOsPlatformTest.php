@@ -150,4 +150,114 @@ final class MacOsPlatformTest extends PlatformTestCase
             ],
         ];
     }
+
+    public function findDataPathProvider(): iterable
+    {
+        yield 'defaults, no subPath, no predicate' => [
+            [], '', null,
+            '/Users/test/Library/Application Support',
+        ];
+        yield 'defaults, no subPath, false predicate' => [
+            [], '', fn($p) => false,
+            null,
+        ];
+        yield 'defaults, no subPath, predicate' => [
+            [], '', fn($p) => str_starts_with($p, '/Lib'),
+            '/Library/Application Support',
+        ];
+        yield 'defaults, subPath, no predicate' => [
+            [], 'foo/bar', null,
+            '/Users/test/Library/Application Support/foo/bar',
+        ];
+        yield 'defaults, subPath, predicate' => [
+            [], 'foo/bar', fn($p) => str_starts_with($p, '/Lib'),
+            '/Library/Application Support/foo/bar',
+        ];
+    }
+
+    public function findConfigPathProvider(): iterable
+    {
+        yield 'defaults, no subPath, no predicate' => [
+            [], '', null,
+            '/Users/test/Library/Application Support',
+        ];
+        yield 'defaults, no subPath, false predicate' => [
+            [], '', fn($p) => false,
+            null,
+        ];
+        yield 'defaults, no subPath, predicate' => [
+            [], '', fn($p) => str_starts_with($p, '/Lib'),
+            '/Library/Application Support',
+        ];
+        yield 'defaults, subPath, no predicate' => [
+            [], 'foo/bar', null,
+            '/Users/test/Library/Application Support/foo/bar',
+        ];
+        yield 'defaults, subPath, predicate' => [
+            [], 'foo/bar', fn($p) => str_starts_with($p, '/Lib'),
+            '/Library/Application Support/foo/bar',
+        ];
+    }
+
+    public function collectDataPathsProvider(): iterable
+    {
+        yield 'defaults, noSubPath, no predicate' => [
+            [], '', null,
+            ['/Library/Application Support', '/Users/test/Library/Application Support'],
+        ];
+        yield 'defaults, noSubPath, false predicate' => [
+            [], '', fn($p) => false, [],
+        ];
+        yield 'defaults, noSubPath, predicate' => [
+            [], '', fn($p) => str_starts_with($p, '/Users'),
+            ['/Users/test/Library/Application Support'],
+        ];
+        yield 'defaults, subPath, no predicate' => [
+            [], 'foo', null,
+            ['/Library/Application Support/foo', '/Users/test/Library/Application Support/foo'],
+        ];
+        yield 'defaults, subPath, predicate' => [
+            [], 'foo', fn($p) => str_starts_with($p, '/Users'),
+            ['/Users/test/Library/Application Support/foo'],
+        ];
+    }
+
+    public function collectConfigPathsProvider(): iterable
+    {
+        yield 'defaults, noSubPath, no predicate' => [
+            [], '', null,
+            [
+                '/Library/Preferences',
+                '/Library/Application Support',
+                '/Users/test/Library/Preferences',
+                '/Users/test/Library/Application Support',
+            ],
+        ];
+        yield 'defaults, noSubPath, false predicate' => [
+            [], '', fn($p) => false, [],
+        ];
+        yield 'defaults, noSubPath, predicate' => [
+            [], '', fn($p) => str_starts_with($p, '/Users'),
+            [
+                '/Users/test/Library/Preferences',
+                '/Users/test/Library/Application Support',
+            ],
+        ];
+        yield 'defaults, subPath, no predicate' => [
+            [], 'foo', null,
+            [
+                '/Library/Preferences/foo',
+                '/Library/Application Support/foo',
+                '/Users/test/Library/Preferences/foo',
+                '/Users/test/Library/Application Support/foo',
+            ],
+        ];
+        yield 'defaults, subPath, predicate' => [
+            [], 'foo', fn($p) => str_starts_with($p, '/Users'),
+            [
+                '/Users/test/Library/Preferences/foo',
+                '/Users/test/Library/Application Support/foo',
+            ],
+        ];
+    }
 }

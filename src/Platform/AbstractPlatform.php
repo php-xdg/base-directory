@@ -3,6 +3,9 @@
 namespace Xdg\BaseDirectory\Platform;
 
 use Xdg\BaseDirectory\Environment\EnvironmentProviderInterface;
+use Xdg\BaseDirectory\Iterator\ConfigPathsIterator;
+use Xdg\BaseDirectory\Iterator\DataPathsIterator;
+use Xdg\BaseDirectory\Iterator\Direction;
 
 abstract class AbstractPlatform implements PlatformInterface
 {
@@ -68,6 +71,28 @@ abstract class AbstractPlatform implements PlatformInterface
 
     abstract protected function getDefaultConfigDirectories(): array;
 
+    public function findDataPath(string $subPath = '', ?callable $predicate = null): ?string
+    {
+        return $this->findPath(DataPathsIterator::class, $subPath, $predicate);
+    }
+
+    public function collectDataPaths(string $subPath = '', ?callable $predicate = null): array
+    {
+        return $this->collectPaths(DataPathsIterator::class, $subPath, $predicate);
+    }
+
+    public function findConfigPath(string $subPath = '', ?callable $predicate = null): ?string
+    {
+        return $this->findPath(ConfigPathsIterator::class, $subPath, $predicate);
+    }
+
+    public function collectConfigPaths(string $subPath = '', ?callable $predicate = null): array
+    {
+        return $this->collectPaths(ConfigPathsIterator::class, $subPath, $predicate);
+    }
+
+    abstract protected function isAbsolutePath(string $path): bool;
+
     private function getPathFromEnv(string $var): ?string
     {
         $path = $this->env->get($var);
@@ -90,5 +115,27 @@ abstract class AbstractPlatform implements PlatformInterface
         return [];
     }
 
-    abstract protected function isAbsolutePath(string $path): bool;
+    private function findPath(string $iteratorClass, string $subPath, ?callable $predicate): ?string
+    {
+        foreach (new $iteratorClass($this, $subPath) as $path) {
+            if (!$predicate || $predicate($path)) {
+                return $path;
+            }
+        }
+
+        return null;
+    }
+
+    private function collectPaths(string $iteratorClass, string $subPath, ?callable $predicate): array
+    {
+        $it = new $iteratorClass($this, $subPath, Direction::MostSpecificLast);
+        $paths = [];
+        foreach ($it as $path) {
+            if (!$predicate || $predicate($path)) {
+                $paths[] = $path;
+            }
+        }
+
+        return array_unique($paths);
+    }
 }

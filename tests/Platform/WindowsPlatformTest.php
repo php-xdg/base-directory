@@ -155,4 +155,112 @@ final class WindowsPlatformTest extends PlatformTestCase
             ],
         ];
     }
+
+    public function findDataPathProvider(): iterable
+    {
+        yield 'defaults, no subPath, no predicate' => [
+            [], '', null,
+            'Z:/users/test/AppData/Local',
+        ];
+        yield 'defaults, no subPath, false predicate' => [
+            [], '', fn($p) => false,
+            null,
+        ];
+        yield 'defaults, no subPath, predicate' => [
+            [], '', fn($p) => str_starts_with($p, 'C:'),
+            'C:/ProgramData',
+        ];
+        yield 'defaults, subPath, no predicate' => [
+            [], 'foo/bar', null,
+            'Z:/users/test/AppData/Local/foo/bar',
+        ];
+        yield 'defaults, subPath, predicate' => [
+            [], 'foo/bar', fn($p) => str_starts_with($p, 'C:'),
+            'C:/ProgramData/foo/bar',
+        ];
+    }
+
+    public function findConfigPathProvider(): iterable
+    {
+        yield 'defaults, no subPath, no predicate' => [
+            [], '', null,
+            'Z:/users/test/AppData/Local',
+        ];
+        yield 'defaults, no subPath, false predicate' => [
+            [], '', fn($p) => false,
+            null,
+        ];
+        yield 'defaults, no subPath, predicate' => [
+            [], '', fn($p) => str_starts_with($p, 'C:'),
+            'C:/ProgramData',
+        ];
+        yield 'defaults, subPath, no predicate' => [
+            [], 'foo/bar', null,
+            'Z:/users/test/AppData/Local/foo/bar',
+        ];
+        yield 'defaults, subPath, predicate' => [
+            [], 'foo/bar', fn($p) => str_starts_with($p, 'C:'),
+            'C:/ProgramData/foo/bar',
+        ];
+    }
+
+    public function collectDataPathsProvider(): iterable
+    {
+        yield 'defaults, noSubPath, no predicate' => [
+            [], '', null,
+            ['C:/ProgramData', 'Z:/users/test/AppData/Roaming', 'Z:/users/test/AppData/Local'],
+        ];
+        yield 'defaults, noSubPath, false predicate' => [
+            [], '', fn($p) => false, [],
+        ];
+        yield 'defaults, noSubPath, predicate' => [
+            [], '', fn($p) => str_starts_with($p, 'Z:'),
+            ['Z:/users/test/AppData/Roaming', 'Z:/users/test/AppData/Local'],
+        ];
+        yield 'defaults, subPath, no predicate' => [
+            [], 'foo', null,
+            ['C:/ProgramData/foo', 'Z:/users/test/AppData/Roaming/foo', 'Z:/users/test/AppData/Local/foo'],
+        ];
+        yield 'defaults, subPath, predicate' => [
+            [], 'foo', fn($p) => str_starts_with($p, 'Z:'),
+            ['Z:/users/test/AppData/Roaming/foo', 'Z:/users/test/AppData/Local/foo'],
+        ];
+    }
+
+    public function collectConfigPathsProvider(): iterable
+    {
+        yield 'defaults, noSubPath, no predicate' => [
+            [], '', null,
+            [
+                'Z:/users/test/AppData/Roaming',
+                'C:/ProgramData',
+                'Z:/users/test/AppData/Local',
+            ],
+        ];
+        yield 'defaults, noSubPath, false predicate' => [
+            [], '', fn($p) => false, [],
+        ];
+        yield 'defaults, noSubPath, predicate' => [
+            [], '', fn($p) => str_starts_with($p, 'Z:'),
+            [
+                'Z:/users/test/AppData/Roaming',
+                'Z:/users/test/AppData/Local',
+            ],
+        ];
+        yield 'defaults, subPath, no predicate' => [
+            [], 'foo', null,
+            [
+                'Z:/users/test/AppData/Roaming/foo',
+                'C:/ProgramData/foo',
+                'Z:/users/test/AppData/Local/foo',
+            ],
+        ];
+        yield 'defaults, subPath, predicate' => [
+            [], 'foo', fn($p) => str_starts_with($p, 'Z:'),
+            [
+                'Z:/users/test/AppData/Roaming/foo',
+                'Z:/users/test/AppData/Local/foo',
+            ],
+        ];
+    }
 }

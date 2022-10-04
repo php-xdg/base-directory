@@ -6,6 +6,9 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use Xdg\BaseDirectory\Platform\PlatformInterface;
 
+/**
+ * @psalm-type EnvVars=array<string, string>
+ */
 abstract class PlatformTestCase extends TestCase
 {
     abstract protected static function createPlatform(array $env): PlatformInterface;
@@ -94,4 +97,53 @@ abstract class PlatformTestCase extends TestCase
     }
 
     abstract public function getRuntimeDirectoryProvider(): iterable;
+
+    /**
+     * @dataProvider findDataPathProvider
+     */
+    public function testFindDataPath(array $env,string $subPath, ?callable $predicate, ?string $expected): void
+    {
+        Assert::assertSame($expected, static::createPlatform($env)->findDataPath($subPath, $predicate));
+    }
+
+    abstract public function findDataPathProvider(): iterable;
+
+    /**
+     * @dataProvider findConfigPathProvider
+     */
+    public function testFindConfigPath(array $env,string $subPath, ?callable $predicate, ?string $expected): void
+    {
+        Assert::assertSame($expected, static::createPlatform($env)->findConfigPath($subPath, $predicate));
+    }
+
+    /**
+     * @return iterable<array{EnvVars, string, callable, string[]}>
+     */
+    abstract public function findConfigPathProvider(): iterable;
+
+    /**
+     * @dataProvider collectDataPathsProvider
+     */
+    public function testCollectDataPaths(array $env, string $subPath, ?callable $predicate, array $expected): void
+    {
+        Assert::assertSame($expected, static::createPlatform($env)->collectDataPaths($subPath, $predicate));
+    }
+
+    /**
+     * @return iterable<array{EnvVars, string, callable, string[]}>
+     */
+    abstract public function collectDataPathsProvider(): iterable;
+
+    /**
+     * @dataProvider collectConfigPathsProvider
+     */
+    public function testCollectConfigPaths(array $env, string $subPath, ?callable $predicate, array $expected): void
+    {
+        Assert::assertSame($expected, static::createPlatform($env)->collectConfigPaths($subPath, $predicate));
+    }
+
+    /**
+     * @return iterable<array{EnvVars, string, callable, string[]}>
+     */
+    abstract public function collectConfigPathsProvider(): iterable;
 }

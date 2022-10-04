@@ -146,4 +146,99 @@ final class UnixPlatformTest extends PlatformTestCase
             ['/etc/xdg'],
         ];
     }
+
+    public function findDataPathProvider(): iterable
+    {
+        yield 'defaults, no subPath, no predicate' => [
+            [], '', null,
+            '/home/test/.local/share',
+        ];
+        yield 'defaults, no subPath, false predicate' => [
+            [], '', fn($p) => false,
+            null,
+        ];
+        yield 'defaults, no subPath, predicate' => [
+            [], '', fn($p) => str_starts_with($p, '/usr'),
+            '/usr/local/share',
+        ];
+        yield 'defaults, subPath, no predicate' => [
+            [], 'foo/bar', null,
+            '/home/test/.local/share/foo/bar',
+        ];
+        yield 'defaults, subPath, predicate' => [
+            [],
+            'foo/bar', fn($p) => str_starts_with($p, '/usr'),
+            '/usr/local/share/foo/bar',
+        ];
+    }
+
+    public function findConfigPathProvider(): iterable
+    {
+        yield 'defaults, no subPath, no predicate' => [
+            [], '', null,
+            '/home/test/.config',
+        ];
+        yield 'defaults, no subPath, false predicate' => [
+            [], '', fn($p) => false,
+            null,
+        ];
+        yield 'defaults, no subPath, predicate' => [
+            [], '', fn($p) => str_starts_with($p, '/etc'),
+            '/etc/xdg',
+        ];
+        yield 'defaults, subPath, no predicate' => [
+            [], 'foo/bar', null,
+            '/home/test/.config/foo/bar',
+        ];
+        yield 'defaults, subPath, predicate' => [
+            [], 'foo/bar', fn($p) => str_starts_with($p, '/etc'),
+            '/etc/xdg/foo/bar',
+        ];
+    }
+
+    public function collectDataPathsProvider(): iterable
+    {
+        yield 'defaults, noSubPath, no predicate' => [
+            [], '', null,
+            ['/usr/share', '/usr/local/share', '/home/test/.local/share'],
+        ];
+        yield 'defaults, noSubPath, false predicate' => [
+            [], '', fn($p) => false, [],
+        ];
+        yield 'defaults, noSubPath, predicate' => [
+            [], '', fn($p) => str_starts_with($p, '/usr'),
+            ['/usr/share', '/usr/local/share'],
+        ];
+        yield 'defaults, subPath, no predicate' => [
+            [], 'foo', null,
+            ['/usr/share/foo', '/usr/local/share/foo', '/home/test/.local/share/foo'],
+        ];
+        yield 'defaults, subPath, predicate' => [
+            [], 'foo', fn($p) => str_starts_with($p, '/usr'),
+            ['/usr/share/foo', '/usr/local/share/foo'],
+        ];
+    }
+
+    public function collectConfigPathsProvider(): iterable
+    {
+        yield 'defaults, noSubPath, no predicate' => [
+            [], '', null,
+            ['/etc/xdg', '/home/test/.config'],
+        ];
+        yield 'defaults, noSubPath, false predicate' => [
+            [], '', fn($p) => false, [],
+        ];
+        yield 'defaults, noSubPath, predicate' => [
+            [], '', fn($p) => str_starts_with($p, '/home'),
+            ['/home/test/.config'],
+        ];
+        yield 'defaults, subPath, no predicate' => [
+            [], 'foo', null,
+            ['/etc/xdg/foo', '/home/test/.config/foo'],
+        ];
+        yield 'defaults, subPath, predicate' => [
+            [], 'foo', fn($p) => str_starts_with($p, '/home'),
+            ['/home/test/.config/foo'],
+        ];
+    }
 }

@@ -45,4 +45,42 @@ interface PlatformInterface
      * @return string[]
      */
     public function getConfigDirectories(): array;
+
+    /**
+     * Iterates XDG config paths in most user-specific order,
+     * and returns the first one matching the given predicate.
+     *
+     * @param string $subPath
+     * @param null|callable(string): bool $predicate
+     * @return string|null
+     */
+    public function findConfigPath(string $subPath = '', ?callable $predicate = null): ?string;
+
+    /**
+     * Iterates XDG data paths in most user-specific order,
+     * and returns the first one matching the given predicate.
+     *
+     * @param string $subPath
+     * @param null|callable(string $path): bool $predicate
+     * @return string|null
+     */
+    public function findDataPath(string $subPath = '', ?callable $predicate = null): ?string;
+
+    /**
+     * Returns the list of XDG config paths filtered by the given predicate, in least user-specific order.
+     *
+     * @param string $subPath
+     * @param null|callable(string): bool $predicate
+     * @return string[]
+     */
+    public function collectConfigPaths(string $subPath = '', ?callable $predicate = null): array;
+
+    /**
+     * Returns the list of XDG data paths filtered by the given predicate, in least user-specific order.
+     *
+     * @param string $subPath
+     * @param null|callable(string): bool $predicate
+     * @return string[]
+     */
+    public function collectDataPaths(string $subPath = '', ?callable $predicate = null): array;
 }
