@@ -2,17 +2,14 @@
 
 namespace Xdg\BaseDirectory\Tests\Platform;
 
-use PHPUnit\Framework\Assert;
-use PHPUnit\Framework\TestCase;
 use Xdg\BaseDirectory\Environment\ArrayProvider;
 use Xdg\BaseDirectory\Exception\MissingHomeDirectoryPath;
-use Xdg\BaseDirectory\Platform\MacOsPlatform;
 use Xdg\BaseDirectory\Platform\Windows\KnownFoldersArrayProvider;
 use Xdg\BaseDirectory\Platform\WindowsPlatform;
 
-final class WindowsPlatformTest extends TestCase
+final class WindowsPlatformTest extends PlatformTestCase
 {
-    private static function createPlatform(array $env): WindowsPlatform
+    protected static function createPlatform(array $env): WindowsPlatform
     {
         return new WindowsPlatform(
             new ArrayProvider([
@@ -22,17 +19,6 @@ final class WindowsPlatformTest extends TestCase
             ]),
             new KnownFoldersArrayProvider([]),
         );
-    }
-
-    /**
-     * @dataProvider getDataHomeProvider
-     */
-    public function testGetDataHome(array $env, string $expected, ?string $exception = null): void
-    {
-        if ($exception) {
-            $this->expectException($exception);
-        }
-        Assert::assertSame($expected, self::createPlatform($env)->getDataHome());
     }
 
     public function getDataHomeProvider(): iterable
@@ -56,17 +42,6 @@ final class WindowsPlatformTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getConfigHomeProvider
-     */
-    public function testGetConfigHome(array $env, string $expected, ?string $exception = null): void
-    {
-        if ($exception) {
-            $this->expectException($exception);
-        }
-        Assert::assertSame($expected, self::createPlatform($env)->getConfigHome());
-    }
-
     public function getConfigHomeProvider(): iterable
     {
         yield 'env is set' => [
@@ -86,17 +61,6 @@ final class WindowsPlatformTest extends TestCase
             '',
             MissingHomeDirectoryPath::class,
         ];
-    }
-
-    /**
-     * @dataProvider getCacheHomeProvider
-     */
-    public function testGetCacheHome(array $env, string $expected, ?string $exception = null): void
-    {
-        if ($exception) {
-            $this->expectException($exception);
-        }
-        Assert::assertSame($expected, self::createPlatform($env)->getCacheHome());
     }
 
     public function getCacheHomeProvider(): iterable
@@ -120,17 +84,6 @@ final class WindowsPlatformTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getStateHomeProvider
-     */
-    public function testGetStateHome(array $env, string $expected, ?string $exception = null): void
-    {
-        if ($exception) {
-            $this->expectException($exception);
-        }
-        Assert::assertSame($expected, self::createPlatform($env)->getStateHome());
-    }
-
     public function getStateHomeProvider(): iterable
     {
         yield 'env is set' => [
@@ -150,17 +103,6 @@ final class WindowsPlatformTest extends TestCase
             '',
             MissingHomeDirectoryPath::class,
         ];
-    }
-
-    /**
-     * @dataProvider getRuntimeDirectoryProvider
-     */
-    public function testGetRuntimeDirectory(array $env, string $expected, ?string $exception = null): void
-    {
-        if ($exception) {
-            $this->expectException($exception);
-        }
-        Assert::assertSame($expected, self::createPlatform($env)->getRuntimeDirectory());
     }
 
     public function getRuntimeDirectoryProvider(): iterable
@@ -184,14 +126,6 @@ final class WindowsPlatformTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getDataDirectoriesProvider
-     */
-    public function testGetDataDirectories(array $env, array $expected): void
-    {
-        Assert::assertSame($expected, self::createPlatform($env)->getDataDirectories());
-    }
-
     public function getDataDirectoriesProvider(): iterable
     {
         yield 'env is set' => [
@@ -205,14 +139,6 @@ final class WindowsPlatformTest extends TestCase
                 'C:/ProgramData',
             ],
         ];
-    }
-
-    /**
-     * @dataProvider getConfigDirectoriesProvider
-     */
-    public function testGetConfigDirectories(array $env, array $expected): void
-    {
-        Assert::assertSame($expected, self::createPlatform($env)->getConfigDirectories());
     }
 
     public function getConfigDirectoriesProvider(): iterable
