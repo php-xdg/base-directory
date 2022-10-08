@@ -3,7 +3,7 @@
 namespace Xdg\BaseDirectory\Platform;
 
 use Symfony\Component\Filesystem\Path;
-use Xdg\BaseDirectory\Environment\EnvironmentProviderInterface;
+use Xdg\Environment\EnvironmentProviderInterface;
 use Xdg\BaseDirectory\Exception\MissingHomeDirectoryPath;
 use Xdg\BaseDirectory\Platform\Windows\KnownFolder;
 use Xdg\BaseDirectory\Platform\Windows\KnownFoldersProviderInterface;

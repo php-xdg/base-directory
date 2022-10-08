@@ -2,7 +2,7 @@
 
 namespace Xdg\BaseDirectory\Platform;
 
-use Xdg\BaseDirectory\Environment\EnvironmentProviderInterface;
+use Xdg\Environment\EnvironmentProviderInterface;
 use Xdg\BaseDirectory\Iterator\ConfigPathsIterator;
 use Xdg\BaseDirectory\Iterator\DataPathsIterator;
 use Xdg\BaseDirectory\Iterator\Direction;

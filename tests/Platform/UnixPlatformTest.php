@@ -2,7 +2,7 @@
 
 namespace Xdg\BaseDirectory\Tests\Platform;
 
-use Xdg\BaseDirectory\Environment\ArrayProvider;
+use Xdg\Environment\ArrayProvider;
 use Xdg\BaseDirectory\Exception\MissingHomeDirectoryPath;
 use Xdg\BaseDirectory\Exception\UnsupportedEnvironment;
 use Xdg\BaseDirectory\Platform\UnixPlatform;

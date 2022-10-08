@@ -2,9 +2,9 @@
 
 namespace Xdg\BaseDirectory;
 
-use Xdg\BaseDirectory\Environment\ChainProvider;
-use Xdg\BaseDirectory\Environment\GetenvProvider;
-use Xdg\BaseDirectory\Environment\SuperGlobalsProvider;
+use Xdg\Environment\ChainProvider;
+use Xdg\Environment\GetenvProvider;
+use Xdg\Environment\SuperGlobalsProvider;
 use Xdg\BaseDirectory\Platform\MacOsPlatform;
 use Xdg\BaseDirectory\Platform\PlatformInterface;
 use Xdg\BaseDirectory\Platform\UnixPlatform;

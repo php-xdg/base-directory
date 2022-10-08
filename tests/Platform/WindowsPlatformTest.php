@@ -2,7 +2,7 @@
 
 namespace Xdg\BaseDirectory\Tests\Platform;
 
-use Xdg\BaseDirectory\Environment\ArrayProvider;
+use Xdg\Environment\ArrayProvider;
 use Xdg\BaseDirectory\Exception\MissingHomeDirectoryPath;
 use Xdg\BaseDirectory\Platform\Windows\KnownFoldersArrayProvider;
 use Xdg\BaseDirectory\Platform\WindowsPlatform;
