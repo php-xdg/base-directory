@@ -16,6 +16,9 @@ use Xdg\BaseDirectory\Platform\WindowsPlatform;
  */
 final class XdgBaseDirectory
 {
+    /**
+     * @codeCoverageIgnore
+     */
     private function __construct()
     {
     }
