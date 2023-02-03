@@ -5,7 +5,7 @@ namespace Xdg\BaseDirectory\Tests\Platform;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Xdg\BaseDirectory\Platform\PlatformInterface;
+use Xdg\BaseDirectory\PlatformInterface;
 
 /**
  * @psalm-type EnvVars=array<string, string>

@@ -24,7 +24,7 @@ $configHome = $platform->getConfigHome();
 $configPath = $platform->findConfigPath('my-app/config.json', \file_exists(...));
 ```
 
-See [PlatformInterface](src/Platform/PlatformInterface.php) for all available methods.
+See the [PlatformInterface](src/PlatformInterface.php) for all available platform methods.
 
 
 ## Fallback values for Windows and macOS platforms

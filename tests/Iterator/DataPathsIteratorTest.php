@@ -7,7 +7,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Xdg\BaseDirectory\Iterator\DataPathsIterator;
 use Xdg\BaseDirectory\Iterator\Direction;
-use Xdg\BaseDirectory\Platform\PlatformInterface;
+use Xdg\BaseDirectory\PlatformInterface;
 
 final class DataPathsIteratorTest extends TestCase
 {

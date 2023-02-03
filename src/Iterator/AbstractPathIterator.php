@@ -4,7 +4,7 @@ namespace Xdg\BaseDirectory\Iterator;
 
 use Symfony\Component\Filesystem\Path;
 use Traversable;
-use Xdg\BaseDirectory\Platform\PlatformInterface;
+use Xdg\BaseDirectory\PlatformInterface;
 
 abstract class AbstractPathIterator implements \IteratorAggregate
 {

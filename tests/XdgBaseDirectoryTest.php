@@ -4,7 +4,7 @@ namespace Xdg\BaseDirectory\Tests;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
-use Xdg\BaseDirectory\Platform\PlatformInterface;
+use Xdg\BaseDirectory\PlatformInterface;
 use Xdg\BaseDirectory\XdgBaseDirectory;
 
 final class XdgBaseDirectoryTest extends TestCase

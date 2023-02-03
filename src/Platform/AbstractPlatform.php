@@ -5,6 +5,7 @@ namespace Xdg\BaseDirectory\Platform;
 use Xdg\BaseDirectory\Iterator\ConfigPathsIterator;
 use Xdg\BaseDirectory\Iterator\DataPathsIterator;
 use Xdg\BaseDirectory\Iterator\Direction;
+use Xdg\BaseDirectory\PlatformInterface;
 use Xdg\Environment\EnvironmentProviderInterface;
 
 abstract class AbstractPlatform implements PlatformInterface

@@ -3,7 +3,6 @@
 namespace Xdg\BaseDirectory;
 
 use Xdg\BaseDirectory\Platform\MacOsPlatform;
-use Xdg\BaseDirectory\Platform\PlatformInterface;
 use Xdg\BaseDirectory\Platform\UnixPlatform;
 use Xdg\BaseDirectory\Platform\Windows\KnownFoldersProviderFactory;
 use Xdg\BaseDirectory\Platform\WindowsPlatform;
