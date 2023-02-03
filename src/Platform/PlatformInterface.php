@@ -49,6 +49,8 @@ interface PlatformInterface
     /**
      * Iterates XDG config paths in most user-specific order,
      * and returns the first one matching the given predicate.
+     * If no predicate is given, returns the first config path.
+     * Paths are iterated from most to least user-specific.
      *
      * @param string $subPath
      * @param null|callable(string): bool $predicate
@@ -59,6 +61,8 @@ interface PlatformInterface
     /**
      * Iterates XDG data paths in most user-specific order,
      * and returns the first one matching the given predicate.
+     * If no predicate is given, returns the first data path.
+     * Paths are iterated from most to least user-specific
      *
      * @param string $subPath
      * @param null|callable(string $path): bool $predicate
@@ -67,7 +71,8 @@ interface PlatformInterface
     public function findDataPath(string $subPath = '', ?callable $predicate = null): ?string;
 
     /**
-     * Returns the list of XDG config paths filtered by the given predicate, in least user-specific order.
+     * Returns the list of XDG config paths, in least to most user-specific order,
+     * optionally filtered by the given predicate.
      *
      * @param string $subPath
      * @param null|callable(string): bool $predicate
@@ -76,7 +81,8 @@ interface PlatformInterface
     public function collectConfigPaths(string $subPath = '', ?callable $predicate = null): array;
 
     /**
-     * Returns the list of XDG data paths filtered by the given predicate, in least user-specific order.
+     * Returns the list of XDG data paths, in least to most user-specific order.
+     * optionally filtered by the given predicate.
      *
      * @param string $subPath
      * @param null|callable(string): bool $predicate

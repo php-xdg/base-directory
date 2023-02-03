@@ -4,11 +4,11 @@ namespace Xdg\BaseDirectory\Tests\Platform;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Xdg\BaseDirectory\Platform\Windows\KnownFolder;
-use Xdg\Environment\Provider\ArrayProvider;
 use Xdg\BaseDirectory\Exception\MissingHomeDirectoryPath;
+use Xdg\BaseDirectory\Platform\Windows\KnownFolder;
 use Xdg\BaseDirectory\Platform\Windows\KnownFoldersArrayProvider;
 use Xdg\BaseDirectory\Platform\WindowsPlatform;
+use Xdg\Environment\Provider\ArrayProvider;
 
 final class WindowsPlatformTest extends PlatformTestCase
 {

@@ -16,7 +16,7 @@ abstract class AbstractPathIterator implements \IteratorAggregate
     }
 
     /**
-     * @return iterable<string>
+     * @return Traversable<string>
      */
     public function getIterator(): Traversable
     {

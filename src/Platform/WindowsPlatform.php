@@ -3,10 +3,10 @@
 namespace Xdg\BaseDirectory\Platform;
 
 use Symfony\Component\Filesystem\Path;
-use Xdg\Environment\EnvironmentProviderInterface;
 use Xdg\BaseDirectory\Exception\MissingHomeDirectoryPath;
 use Xdg\BaseDirectory\Platform\Windows\KnownFolder;
 use Xdg\BaseDirectory\Platform\Windows\KnownFoldersProviderInterface;
+use Xdg\Environment\EnvironmentProviderInterface;
 
 final class WindowsPlatform extends AbstractPlatform
 {

@@ -2,10 +2,10 @@
 
 namespace Xdg\BaseDirectory\Tests\Platform;
 
-use Xdg\Environment\Provider\ArrayProvider;
 use Xdg\BaseDirectory\Exception\MissingHomeDirectoryPath;
 use Xdg\BaseDirectory\Exception\UnsupportedEnvironment;
 use Xdg\BaseDirectory\Platform\UnixPlatform;
+use Xdg\Environment\Provider\ArrayProvider;
 
 final class UnixPlatformTest extends PlatformTestCase
 {

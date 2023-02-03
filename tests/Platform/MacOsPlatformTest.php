@@ -2,9 +2,9 @@
 
 namespace Xdg\BaseDirectory\Tests\Platform;
 
-use Xdg\Environment\Provider\ArrayProvider;
 use Xdg\BaseDirectory\Exception\MissingHomeDirectoryPath;
 use Xdg\BaseDirectory\Platform\MacOsPlatform;
+use Xdg\Environment\Provider\ArrayProvider;
 
 final class MacOsPlatformTest extends PlatformTestCase
 {

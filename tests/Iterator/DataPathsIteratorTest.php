@@ -4,8 +4,8 @@ namespace Xdg\BaseDirectory\Tests\Iterator;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Xdg\BaseDirectory\Iterator\DataPathsIterator;
 use PHPUnit\Framework\TestCase;
+use Xdg\BaseDirectory\Iterator\DataPathsIterator;
 use Xdg\BaseDirectory\Iterator\Direction;
 use Xdg\BaseDirectory\Platform\PlatformInterface;
 
