@@ -2,6 +2,6 @@
 
 namespace Xdg\BaseDirectory\Exception;
 
-class UnsupportedEnvironment extends \RuntimeException
+class UnsupportedEnvironment extends \RuntimeException implements XdgBaseDirectoryException
 {
 }

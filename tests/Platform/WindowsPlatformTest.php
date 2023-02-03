@@ -2,6 +2,9 @@
 
 namespace Xdg\BaseDirectory\Tests\Platform;
 
+use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\DataProvider;
+use Xdg\BaseDirectory\Platform\Windows\KnownFolder;
 use Xdg\Environment\Provider\ArrayProvider;
 use Xdg\BaseDirectory\Exception\MissingHomeDirectoryPath;
 use Xdg\BaseDirectory\Platform\Windows\KnownFoldersArrayProvider;
@@ -19,6 +22,30 @@ final class WindowsPlatformTest extends PlatformTestCase
             ]),
             new KnownFoldersArrayProvider([]),
         );
+    }
+
+    #[DataProvider('homeDirectoryUsesUserProfileEnvProvider')]
+    public function testHomeDirectoryUsesUserProfileEnv(array $env, array $knownFolders, string $home): void
+    {
+        $platform = new WindowsPlatform(
+            new ArrayProvider($env),
+            new KnownFoldersArrayProvider($knownFolders)
+        );
+        Assert::assertSame("{$home}/AppData/Local", $platform->getDataHome());
+    }
+
+    public static function homeDirectoryUsesUserProfileEnvProvider(): iterable
+    {
+        yield 'prioritizes KnownFolder::Profile' => [
+            ['USERPROFILE' => 'Z:/baz'],
+            [KnownFolder::Profile->name => 'C:/foo/bar'],
+            'C:/foo/bar',
+        ];
+        yield 'fallback to USERPROFILE' => [
+            ['USERPROFILE' => 'Z:/baz'],
+            [],
+            'Z:/baz',
+        ];
     }
 
     public static function getDataHomeProvider(): iterable
