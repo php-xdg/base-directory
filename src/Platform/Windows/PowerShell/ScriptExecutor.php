@@ -9,7 +9,7 @@ final class ScriptExecutor implements ScriptExecutorInterface
 {
     private static string|false|null $binary;
 
-    public static function isSupported(): bool
+    public function isSupported(): bool
     {
         return !!self::getBinary();
     }
@@ -54,7 +54,15 @@ final class ScriptExecutor implements ScriptExecutorInterface
 
     private static function findBinary(string $name): ?string
     {
-        if ($bin = strtok(exec("where {$name}"), \PHP_EOL)) {
+        $which = match (\PHP_OS_FAMILY) {
+            'Windows' => 'where',
+            default => 'which',
+        };
+        if (false === $output = exec("{$which} {$name}")) {
+            return null;
+        }
+
+        if ($bin = strtok($output, \PHP_EOL)) {
             return $bin;
         }
 

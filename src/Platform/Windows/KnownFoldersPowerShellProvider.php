@@ -16,6 +16,11 @@ final class KnownFoldersPowerShellProvider implements KnownFoldersProviderInterf
     ) {
     }
 
+    public function isSupported(): bool
+    {
+        return $this->executor->isSupported();
+    }
+
     public function get(KnownFolder $id): ?string
     {
         $this->cache ??= $this->fetchDirectories();

@@ -9,10 +9,30 @@ use Xdg\BaseDirectory\Platform\Windows\PowerShell\ScriptExecutor;
  */
 final class KnownFoldersProviderFactory
 {
-    public static function fromEnvironment(): KnownFoldersProviderInterface
+    /** @var KnownFoldersProviderInterface[] */
+    private readonly array $providers;
+
+    public function __construct(
+        KnownFoldersProviderInterface ...$providers,
+    ) {
+        $this->providers = $providers;
+    }
+
+    public static function default(): KnownFoldersProviderInterface
     {
-        if (ScriptExecutor::isSupported()) {
-            return new KnownFoldersPowerShellProvider(new ScriptExecutor());
+        $self = new self(
+            new KnownFoldersPowerShellProvider(new ScriptExecutor()),
+        );
+
+        return $self->create();
+    }
+
+    public function create(): KnownFoldersProviderInterface
+    {
+        foreach ($this->providers as $provider) {
+            if ($provider->isSupported()) {
+                return $provider;
+            }
         }
 
         return new KnownFoldersArrayProvider([]);

@@ -7,7 +7,7 @@ namespace Xdg\BaseDirectory\Platform\Windows\PowerShell;
  */
 interface ScriptExecutorInterface
 {
-    public static function isSupported(): bool;
+    public function isSupported(): bool;
 
     public function execute(string $script, string ...$arguments): string;
 }

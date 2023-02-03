@@ -26,7 +26,7 @@ final class XdgBaseDirectory
         $env = XdgEnvironment::default();
 
         return match (\PHP_OS_FAMILY) {
-            'Windows' => new WindowsPlatform($env, KnownFoldersProviderFactory::fromEnvironment()),
+            'Windows' => new WindowsPlatform($env, KnownFoldersProviderFactory::default()),
             'Darwin' => new MacOsPlatform($env),
             default => new UnixPlatform($env),
         };

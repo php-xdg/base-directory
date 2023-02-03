@@ -15,6 +15,11 @@ final class KnownFoldersArrayProvider implements KnownFoldersProviderInterface
     ) {
     }
 
+    public function isSupported(): bool
+    {
+        return true;
+    }
+
     public function get(KnownFolder $id): ?string
     {
         return $this->folders[$id->name] ?? null;

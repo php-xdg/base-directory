@@ -10,7 +10,8 @@ final class DummyScriptExecutorTest extends TestCase
 {
     public function testItIsSupported(): void
     {
-        Assert::assertTrue(DummyScriptExecutor::isSupported());
+        $exec = new DummyScriptExecutor('');
+        Assert::assertTrue($exec->isSupported());
     }
 
     public function testItReturnsTheConstructorArgument(): void

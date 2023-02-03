@@ -9,5 +9,7 @@ namespace Xdg\BaseDirectory\Platform\Windows;
  */
 interface KnownFoldersProviderInterface
 {
+    public function isSupported(): bool;
+
     public function get(KnownFolder $id): ?string;
 }

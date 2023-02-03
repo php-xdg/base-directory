@@ -12,7 +12,7 @@ final class DummyScriptExecutor implements ScriptExecutorInterface
     ) {
     }
 
-    public static function isSupported(): bool
+    public function isSupported(): bool
     {
         return true;
     }
