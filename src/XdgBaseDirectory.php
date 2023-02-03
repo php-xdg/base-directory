@@ -2,14 +2,12 @@
 
 namespace Xdg\BaseDirectory;
 
-use Xdg\Environment\ChainProvider;
-use Xdg\Environment\GetenvProvider;
-use Xdg\Environment\SuperGlobalsProvider;
 use Xdg\BaseDirectory\Platform\MacOsPlatform;
 use Xdg\BaseDirectory\Platform\PlatformInterface;
 use Xdg\BaseDirectory\Platform\UnixPlatform;
 use Xdg\BaseDirectory\Platform\Windows\KnownFoldersProviderFactory;
 use Xdg\BaseDirectory\Platform\WindowsPlatform;
+use Xdg\Environment\XdgEnvironment;
 
 /**
  * {@see https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html}
@@ -25,10 +23,7 @@ final class XdgBaseDirectory
 
     public static function fromEnvironment(): PlatformInterface
     {
-        $env = new ChainProvider(
-            new SuperGlobalsProvider(),
-            new GetenvProvider(),
-        );
+        $env = XdgEnvironment::default();
 
         return match (\PHP_OS_FAMILY) {
             'Windows' => new WindowsPlatform($env, KnownFoldersProviderFactory::fromEnvironment()),
