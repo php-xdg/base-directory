@@ -3,18 +3,16 @@
 namespace Xdg\BaseDirectory\Tests\Platform\Windows\PowerShell;
 
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresOperatingSystemFamily;
 use PHPUnit\Framework\TestCase;
 use Xdg\BaseDirectory\Platform\Windows\PowerShell\ScriptExecutor;
 use Xdg\BaseDirectory\Tests\ResourceHelper;
 
-/**
- * @requires OSFAMILY Windows
- */
+#[RequiresOperatingSystemFamily('Windows')]
 final class ScriptExecutorTest extends TestCase
 {
-    /**
-     * @dataProvider executeProvider
-     */
+    #[DataProvider('executeProvider')]
     public function testExecute(array $arguments, string $expected): void
     {
         if (!ScriptExecutor::isSupported()) {
@@ -25,7 +23,7 @@ final class ScriptExecutorTest extends TestCase
         Assert::assertSame($expected, $executor->execute(...$arguments));
     }
 
-    public function executeProvider(): iterable
+    public static function executeProvider(): iterable
     {
         yield 'echo "success"' => [
             [ResourceHelper::getPath('powershell/echo.ps1'), 'success'],

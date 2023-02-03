@@ -19,7 +19,7 @@ final class UnixPlatformTest extends PlatformTestCase
         );
     }
 
-    public function getDataHomeProvider(): iterable
+    public static function getDataHomeProvider(): iterable
     {
         yield 'env is set' => [
             ['XDG_DATA_HOME' => '/foo/bar'],
@@ -40,7 +40,7 @@ final class UnixPlatformTest extends PlatformTestCase
         ];
     }
 
-    public function getConfigHomeProvider(): iterable
+    public static function getConfigHomeProvider(): iterable
     {
         yield 'env is set' => [
             ['XDG_CONFIG_HOME' => '/foo/bar'],
@@ -61,7 +61,7 @@ final class UnixPlatformTest extends PlatformTestCase
         ];
     }
 
-    public function getCacheHomeProvider(): iterable
+    public static function getCacheHomeProvider(): iterable
     {
         yield 'env is set' => [
             ['XDG_CACHE_HOME' => '/foo/bar'],
@@ -82,7 +82,7 @@ final class UnixPlatformTest extends PlatformTestCase
         ];
     }
 
-    public function getStateHomeProvider(): iterable
+    public static function getStateHomeProvider(): iterable
     {
         yield 'env is set' => [
             ['XDG_STATE_HOME' => '/foo/bar'],
@@ -103,7 +103,7 @@ final class UnixPlatformTest extends PlatformTestCase
         ];
     }
 
-    public function getRuntimeDirectoryProvider(): iterable
+    public static function getRuntimeDirectoryProvider(): iterable
     {
         yield 'env is set' => [
             ['XDG_RUNTIME_DIR' => '/foo/bar'],
@@ -123,7 +123,7 @@ final class UnixPlatformTest extends PlatformTestCase
         }
     }
 
-    public function getDataDirectoriesProvider(): iterable
+    public static function getDataDirectoriesProvider(): iterable
     {
         yield 'env is set' => [
             ['XDG_DATA_DIRS' => '/foo:/bar'],
@@ -135,7 +135,7 @@ final class UnixPlatformTest extends PlatformTestCase
         ];
     }
 
-    public function getConfigDirectoriesProvider(): iterable
+    public static function getConfigDirectoriesProvider(): iterable
     {
         yield 'env is set' => [
             ['XDG_CONFIG_DIRS' => '/foo:/bar'],
@@ -147,7 +147,7 @@ final class UnixPlatformTest extends PlatformTestCase
         ];
     }
 
-    public function findDataPathProvider(): iterable
+    public static function findDataPathProvider(): iterable
     {
         yield 'defaults, no subPath, no predicate' => [
             [], '', null,
@@ -172,7 +172,7 @@ final class UnixPlatformTest extends PlatformTestCase
         ];
     }
 
-    public function findConfigPathProvider(): iterable
+    public static function findConfigPathProvider(): iterable
     {
         yield 'defaults, no subPath, no predicate' => [
             [], '', null,
@@ -196,7 +196,7 @@ final class UnixPlatformTest extends PlatformTestCase
         ];
     }
 
-    public function collectDataPathsProvider(): iterable
+    public static function collectDataPathsProvider(): iterable
     {
         yield 'defaults, noSubPath, no predicate' => [
             [], '', null,
@@ -219,7 +219,7 @@ final class UnixPlatformTest extends PlatformTestCase
         ];
     }
 
-    public function collectConfigPathsProvider(): iterable
+    public static function collectConfigPathsProvider(): iterable
     {
         yield 'defaults, noSubPath, no predicate' => [
             [], '', null,

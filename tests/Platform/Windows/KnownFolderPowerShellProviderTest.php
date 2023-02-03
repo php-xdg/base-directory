@@ -3,6 +3,7 @@
 namespace Xdg\BaseDirectory\Tests\Platform\Windows;
 
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Xdg\BaseDirectory\Platform\Windows\KnownFolder;
 use Xdg\BaseDirectory\Platform\Windows\KnownFoldersPowerShellProvider;
@@ -10,16 +11,14 @@ use Xdg\BaseDirectory\Platform\Windows\PowerShell\DummyScriptExecutor;
 
 final class KnownFolderPowerShellProviderTest extends TestCase
 {
-    /**
-     * @dataProvider getFolderProvider
-     */
+    #[DataProvider('getFolderProvider')]
     public function testGetFolder(KnownFolder $id, string $output, ?string $expected): void
     {
         $provider = new KnownFoldersPowerShellProvider(new DummyScriptExecutor($output));
         Assert::assertSame($expected, $provider->get($id));
     }
 
-    public function getFolderProvider(): iterable
+    public static function getFolderProvider(): iterable
     {
         $output = <<<'EOS'
         Profile=C:\users\me

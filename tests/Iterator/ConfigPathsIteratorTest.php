@@ -3,6 +3,7 @@
 namespace Xdg\BaseDirectory\Tests\Iterator;
 
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Xdg\BaseDirectory\Iterator\ConfigPathsIterator;
 use Xdg\BaseDirectory\Iterator\Direction;
@@ -23,9 +24,7 @@ final class ConfigPathsIteratorTest extends TestCase
         return $platform;
     }
 
-    /**
-     * @dataProvider iterationProvider
-     */
+    #[DataProvider('iterationProvider')]
     public function testIteration(string $cfgHome, array $cfgDirs, string $subPath, Direction $direction, array $expected): void
     {
         $platform = self::mockPlatform($cfgHome, $cfgDirs);
@@ -34,7 +33,7 @@ final class ConfigPathsIteratorTest extends TestCase
         Assert::assertSame($expected, $paths);
     }
 
-    public function iterationProvider(): iterable
+    public static function iterationProvider(): iterable
     {
         yield 'no subPath, user order order' => [
             '/home/me', ['/usr/local/etc', '/etc'],
