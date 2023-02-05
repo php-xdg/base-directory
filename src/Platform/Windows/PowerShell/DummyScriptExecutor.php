@@ -17,7 +17,7 @@ final class DummyScriptExecutor implements ScriptExecutorInterface
         return true;
     }
 
-    public function execute(string $script, string ...$arguments): string
+    public function execute(\SplFileObject|string $script): string
     {
         return $this->output;
     }

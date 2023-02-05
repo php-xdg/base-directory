@@ -2,6 +2,8 @@
 
 namespace Xdg\BaseDirectory\Platform\Windows\PowerShell;
 
+use SplFileObject;
+
 /**
  * @internal
  */
@@ -9,5 +11,5 @@ interface ScriptExecutorInterface
 {
     public function isSupported(): bool;
 
-    public function execute(string $script, string ...$arguments): string;
+    public function execute(SplFileObject|string $script): string;
 }

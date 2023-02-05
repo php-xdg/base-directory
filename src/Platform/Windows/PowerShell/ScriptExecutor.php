@@ -14,24 +14,31 @@ final class ScriptExecutor implements ScriptExecutorInterface
         return !!self::getBinary();
     }
 
-    public function execute(string $script, string ...$arguments): string
+    public function execute(\SplFileObject|string $script): string
     {
         if (!$bin = self::getBinary()) {
             return '';
         }
 
         $p = proc_open(
-            [$bin, $script, ...$arguments],
-            [1 => ['pipe', 'w']],
+            [$bin, '-NonInteractive', '-Command', '-'],
+            [0 => ['pipe', 'r'], 1 => ['pipe', 'w']],
             $pipes,
             null,
-            null,
+            array_merge(getenv(), ['NO_COLOR' => '1', 'TERM' => 'dumb']),
             ['bypass_shell' => true, 'suppress_errors' => true],
         );
 
         if (!\is_resource($p)) {
             return '';
         }
+
+        if (\is_string($script)) {
+            fwrite($pipes[0], $script);
+        } else {
+            fwrite($pipes[0], $script->fread($script->getSize()));
+        }
+        fclose($pipes[0]);
 
         $output = stream_get_contents($pipes[1]);
         $code = proc_close($p);

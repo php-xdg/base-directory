@@ -29,7 +29,8 @@ final class KnownFoldersPowerShellProvider implements KnownFoldersProviderInterf
 
     private function fetchDirectories(): array
     {
-        $output = $this->executor->execute(__DIR__ . '/get-known-folders.ps1');
+        $script = new \SplFileObject(__DIR__ . '/get-known-folders.ps1');
+        $output = $this->executor->execute($script);
         return $this->parseOutput($output);
     }
 

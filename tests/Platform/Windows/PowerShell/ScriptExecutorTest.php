@@ -11,24 +11,34 @@ use Xdg\BaseDirectory\Tests\ResourceHelper;
 final class ScriptExecutorTest extends TestCase
 {
     #[DataProvider('executeProvider')]
-    public function testExecute(array $arguments, string $expected): void
+    public function testExecute(string|\SplFileObject $script, string $expected): void
     {
         $executor = new ScriptExecutor();
         if (!$executor->isSupported()) {
             $this->markTestSkipped('PowerShell script executor is not supported on this system.');
         }
 
-        Assert::assertSame($expected, $executor->execute(...$arguments));
+        Assert::assertSame($expected, $executor->execute($script));
     }
 
     public static function executeProvider(): iterable
     {
         yield 'echo "success"' => [
-            [ResourceHelper::getPath('powershell/echo.ps1'), 'success'],
+            <<<'PWSH'
+            Write-Host "success"
+            exit 0
+            PWSH,
+            "success\n",
+        ];
+        yield 'echo success w/ stream' => [
+            new \SplFileObject(ResourceHelper::getPath('powershell/echo-success.ps1'), 'r'),
             "success\n",
         ];
         yield 'exit > 0' => [
-            [ResourceHelper::getPath('powershell/exit-err.ps1')],
+            <<<'PWSH'
+            Write-Host "exit(1)"
+            exit 1
+            PWSH,
             '',
         ];
     }
